@@ -67,6 +67,7 @@ public class Main {
         System.out.println("\n=== Demonstração do Padrão Bridge para Geração de Laudos ===");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorTexto());
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorHTML());
+        sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
 
         // Requisito 10: Padrão Decorator 
         // Laudo laudoDecorado = new LaudoComAssinaturaDecorator(laudoGlicose, "Assinatura digital válida.");

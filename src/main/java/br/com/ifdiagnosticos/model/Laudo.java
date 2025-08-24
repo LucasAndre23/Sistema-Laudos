@@ -1,6 +1,8 @@
 package br.com.ifdiagnosticos.model;
 
 import br.com.ifdiagnosticos.patterns.bridge.GeradorDeFormato;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Laudo {
@@ -31,12 +33,13 @@ public class Laudo {
     public Date getDataEmissao() { return dataEmissao; }
 
     public String getCabecalho() {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         return "IF Diagnósticos - Laudo de Exame\n" +
                "ID do Exame: " + this.id + "\n" +
                "Nome do Paciente: " + this.exame.getPaciente().getNome() + "\n" +
                "Convênio: " + this.exame.getPaciente().getConvenio() + "\n" +
                "Médico Solicitante: " + this.exame.getMedicoSolicitante().getNome() + " (" + this.exame.getMedicoSolicitante().getCrm() + ")\n" +
-               "Data da Implantação no Sistema: " + this.dataEmissao + "\n";
+               "Data da Implantação no Sistema: " + sdf.format(this.dataEmissao) + "\n";
     }
 
     public String getRodape() {
@@ -44,3 +47,4 @@ public class Laudo {
                "Médico Responsável: " + this.medicoResponsavel.getNome() + " (" + this.medicoResponsavel.getCrm() + ")\n";
     }
 }
+
