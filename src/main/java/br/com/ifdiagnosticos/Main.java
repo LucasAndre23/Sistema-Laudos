@@ -1,7 +1,6 @@
 package br.com.ifdiagnosticos;
 
-
-
+import br.com.ifdiagnosticos.model.Prioridade;
 import br.com.ifdiagnosticos.model.*;
 import br.com.ifdiagnosticos.patterns.bridge.GeradorHTML;
 import br.com.ifdiagnosticos.patterns.bridge.GeradorPDF;
@@ -13,63 +12,80 @@ import br.com.ifdiagnosticos.patterns.facade.SistemaLaudoFacade;
 import br.com.ifdiagnosticos.patterns.observer.NotificadorEmail;
 import br.com.ifdiagnosticos.patterns.strategy.ValidadorGlicose;
 import br.com.ifdiagnosticos.patterns.strategy.ValidadorRaioX;
+import br.com.ifdiagnosticos.patterns.strategy.ValidadorRessonancia;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
 public class Main {
     public static void main(String[] args) {
-        //  Padrão Chain of Responsibility
+        
+        // Simulação do carregamento de dados de arquivos CSV
+        Paciente paciente1 = new Paciente("Maria da Silva", "Plano ABC", 65, "maria@email.com", false, false);
+        Paciente paciente2 = new Paciente("João Souza", "Particular", 30, "joao@email.com", false, false);
+        Paciente paciente3 = new Paciente("Bob Silva", "Plano XYZ", 72, "bob@email.com", false, true); // paciente com implante para falhar na validação
+        
+        Medico medicoSolicitante = new Medico("Dr. Roberto", "CRM-SP 123456", true);
+        Medico medicoResponsavel = new Medico("Dra. Roberta", "CRM-SP 654321", true);
+
+        // --- R7: Padrão Chain of Responsibility (Cadeia de Descontos) ---
         Desconto descontoConvenio = new DescontoConvenio();
         Desconto descontoIdoso = new DescontoIdoso();
         descontoConvenio.setProximoDesconto(descontoIdoso);
-        // Exemplo de um desconto que não se aplica, então passa para o próximo
-        descontoIdoso.setProximoDesconto(null); 
-
-        // Padrão Facade
+        descontoIdoso.setProximoDesconto(null);
+        
+        // --- R9: Padrão Facade ---
         SistemaLaudoFacade sistema = new SistemaLaudoFacade(descontoConvenio);
 
-        // Padrão Observer
+        // --- R6: Padrão Observer (Notificação) ---
         sistema.registrarObserver(new NotificadorEmail());
         
-        // criação de exames com diferentes prioridades e tipos
-        Paciente paciente1 = new Paciente("Maria da Silva", "Plano ABC", 65, "maria@email.com");
-        Paciente paciente2 = new Paciente("João Souza", "", 30, "joao@email.com");
-        Paciente paciente3 = new Paciente("Bob Esponja", "Plano XYZ", 72, "bob@email.com");
+
+        // --- R2: Geração de ID Sequencial ---
+        int proximoId = 1;
+
+        // --- R3 e R5: Padrão Strategy (Tipos de Exame e Validações) ---
+        System.out.println("=== Instanciação e Validação dos Exames ===");
+
+        // Exame de Glicose (prioridade URGENTE)
         
-        Medico medico1 = new Medico("Dr. Roberto", "CRM-SP 123456");
-        
-        // Padrão Strategy: Atribui o validador específico para cada exame
-        Exame exame1 = new Exame(paciente1, medico1, "Glicose", 50.00, Prioridade.URGENTE);
+        Exame exame1 = new Exame(new Date(), "Glicose",50.00, "130 mg/DL", paciente1, medicoSolicitante, Prioridade.URGENTE);
+        exame1.setId(proximoId++);
         exame1.setValidador(new ValidadorGlicose());
-        exame1.setResultado("130 mg/DL");
 
-        Exame exame2 = new Exame(paciente2, medico1, "Raio-X de Tórax", 120.00, Prioridade.ROTINA);
+        // Exame de Raio-X de Tórax (prioridade ROTINA)
+        Exame exame2 = new Exame(new Date(), "Raio-X de Tórax",100.00, "Imagem sem alterações significativas.", paciente2, medicoSolicitante, Prioridade.ROTINA);
+        exame2.setId(proximoId++);
         exame2.setValidador(new ValidadorRaioX());
-        exame2.setResultado("Imagem sem alterações significativas.");
+        exame2.setMedicoResponsavel(medicoResponsavel);
 
-        Exame exame3 = new Exame(paciente3, medico1, "Glicose", 50.00, Prioridade.POUCO_URGENTE);
-        exame3.setValidador(new ValidadorGlicose());
-        exame3.setResultado("83 mg/DL");
+        // Exame de Ressonância Magnética (prioridade ALTA)
+        Exame exame3 = new Exame(new Date(), "Ressonância Magnética",200.00, "Laudo da RM...", paciente3, medicoSolicitante, Prioridade.URGENTE);
+        exame3.setId(proximoId++);
+        exame3.setValidador(new ValidadorRessonancia());
+        exame3.setMedicoResponsavel(medicoResponsavel);
 
-        // Adicionando exames à fila de prioridade
-        sistema.adicionarExameNaFila(exame2);
-        sistema.adicionarExameNaFila(exame1);
-        sistema.adicionarExameNaFila(exame3);
+        // --- R8: Fila de Prioridade ---
+        System.out.println("\n=== Adicionando Exames à Fila ===");
+        // Adicionando exames fora de ordem para testar a fila de prioridade
+        sistema.adicionarExameNaFila(exame2); // ROTINA
+        sistema.adicionarExameNaFila(exame1); // URGENTE
+        sistema.adicionarExameNaFila(exame3); // URGENTE
 
         // Processa a fila de exames
+        System.out.println("\n=== Processando a Fila de Prioridade ===");
         sistema.processarFila();
-        
-        // Simulação de geração de laudos em diferentes formatos
-        Medico medicoResponsavel = new Medico("Dra. Roberta", "CRN 654321");
+
+        // --- R4: Padrão Bridge (Geração de Laudos em Diferentes Formatos) ---
+        System.out.println("\n=== Demonstração do Padrão Bridge para Geração de Laudos ===");
         Laudo laudoGlicose = new LaudoSanguineo(exame1, medicoResponsavel, exame1.getResultado(), "Diagnóstico automático...");
 
-        System.out.println("\n=== Demonstração do Padrão Bridge para Geração de Laudos ===");
+        System.out.println("Gerando laudo de Glicose em formato Texto...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorTexto());
+
+        System.out.println("\nGerando laudo de Glicose em formato HTML...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorHTML());
 
-        // Requisito 10: Padrão Decorator 
-        // Laudo laudoDecorado = new LaudoComAssinaturaDecorator(laudoGlicose, "Assinatura digital válida.");
-        // sistema.gerarLaudoEmFormato(laudoDecorado, new GeradorTexto());
+        System.out.println("\nGerando laudo de Glicose em formato PDF...");
+        sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
     }
 }

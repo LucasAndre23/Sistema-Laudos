@@ -44,7 +44,7 @@ public class SistemaLaudoFacade {
             exame.validar();
 
             // Gerar Laudo
-            Medico medicoResponsavel = new Medico("Dr. João Silva", "CRN 12345");
+            Medico medicoResponsavel = new Medico("Dr. João Silva", "CRN 12345", true);
             String corpoLaudo = "Resultado do exame: " + exame.getResultado();
             Laudo laudo = new Laudo(exame, medicoResponsavel, corpoLaudo);
             
