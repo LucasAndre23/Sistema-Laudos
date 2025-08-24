@@ -84,6 +84,7 @@ public class Main {
 
         System.out.println("\nGerando laudo de Glicose em formato HTML...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorHTML());
+        sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
 
         System.out.println("\nGerando laudo de Glicose em formato PDF...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
