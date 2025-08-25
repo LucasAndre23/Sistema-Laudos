@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 public class GeradorPDF implements GeradorDeFormato {
     @Override
-    public String formatar(Laudo laudo) {
+    public void formatar(Laudo laudo) {
         try (OutputStream outputStream = new FileOutputStream("laudo-" + laudo.getId() + ".pdf")) {
             Document document = new Document();
             PdfWriter.getInstance(document, outputStream);
@@ -23,6 +23,6 @@ public class GeradorPDF implements GeradorDeFormato {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return "Arquivo PDF gerado.";
+        
     }
 }

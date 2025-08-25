@@ -33,6 +33,7 @@ public class SistemaLaudoFacade {
             Exame exame = filaPrioridade.proximoExame();
             System.out.println("\n--- Processando exame da fila: " + exame.getTipo() + " (" + exame.getPrioridade() + ") ---");
             
+            try{
             int novoId = idGenerator.getNextId();
             exame.setId(novoId);
             System.out.println("ID sequencial gerado: " + novoId);
@@ -44,7 +45,7 @@ public class SistemaLaudoFacade {
             exame.validar();
 
             // Gerar Laudo
-            Medico medicoResponsavel = new Medico("Dr. João Silva", "CRN 12345", true);
+            Medico medicoResponsavel = exame.getMedicoResponsavel();
             String corpoLaudo = "Resultado do exame: " + exame.getResultado();
             Laudo laudo = new Laudo(exame, medicoResponsavel, corpoLaudo);
             
@@ -52,11 +53,16 @@ public class SistemaLaudoFacade {
             observers.forEach(o -> o.notificar(laudo));
             
             System.out.println("Laudo gerado com sucesso.");
-        }
+            }catch (IllegalArgumentException e) {
+            
+            System.err.println("Falha na validação do exame. Motivo: " + e.getMessage());
+            System.out.println("O processamento deste exame foi ignorado.");
+            }}
+        
     }
 
     public void gerarLaudoEmFormato(Laudo laudo, GeradorDeFormato gerador) {
         System.out.println("\n--- Gerando laudo no formato " + gerador.getClass().getSimpleName() + " ---");
-        System.out.println(laudo.gerar(gerador));
+        laudo.gerar(gerador);
     }
 }

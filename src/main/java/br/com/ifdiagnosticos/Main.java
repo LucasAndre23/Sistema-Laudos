@@ -44,7 +44,7 @@ public class Main {
         int proximoId = 1;
 
         // --- R3 e R5: Padrão Strategy (Tipos de Exame e Validações) ---
-        System.out.println("=== Instanciação e Validação dos Exames ===");
+        System.out.println("\n=== Instanciação e Validação dos Exames ===");
 
         // Exame de Glicose (prioridade URGENTE)
         
@@ -79,14 +79,9 @@ public class Main {
         System.out.println("\n=== Demonstração do Padrão Bridge para Geração de Laudos ===");
         Laudo laudoGlicose = new LaudoSanguineo(exame1, medicoResponsavel, exame1.getResultado(), "Diagnóstico automático...");
 
-        System.out.println("Gerando laudo de Glicose em formato Texto...");
+        
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorTexto());
-
-        System.out.println("\nGerando laudo de Glicose em formato HTML...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorHTML());
-        sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
-
-        System.out.println("\nGerando laudo de Glicose em formato PDF...");
         sistema.gerarLaudoEmFormato(laudoGlicose, new GeradorPDF());
     }
 }

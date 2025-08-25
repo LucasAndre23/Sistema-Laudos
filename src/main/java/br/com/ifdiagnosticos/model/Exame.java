@@ -16,7 +16,6 @@ public class Exame {
     private Paciente paciente;
     private Medico medicoSolicitante;
     private Medico medicoResponsavel;
-
     private ValidadorExame validador;
 
     // Atributos específicos para exames como Ressonância Magnética

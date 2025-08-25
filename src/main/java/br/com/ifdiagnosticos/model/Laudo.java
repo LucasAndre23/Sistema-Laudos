@@ -21,8 +21,8 @@ public class Laudo {
     }
 
     // Padrão Bridge
-    public String gerar(GeradorDeFormato gerador) {
-        return gerador.formatar(this);
+    public void gerar(GeradorDeFormato gerador) {
+        gerador.formatar(this);
     }
 
     // Getters...
