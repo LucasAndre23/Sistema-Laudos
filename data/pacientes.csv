@@ -1,0 +1,4 @@
+nome,plano,idade,email,hasConvenio,hasImplante
+"Maria da Silva","Plano ABC",65,"maria@email.com",false,false
+"João Souza","Particular",30,"joao@email.com",false,false
+"Bob Silva","Plano XYZ",72,"bob@email.com",false,true
