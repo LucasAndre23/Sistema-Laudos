@@ -18,6 +18,11 @@ Geração de ID Único: Cada exame recebe um ID sequencial e único.
 Arquitetura e Padrões de Projeto
 A arquitetura do sistema foi desenhada com base em padrões de projeto para desacoplar as responsabilidades e tornar o código mais limpo e manutenível.
 
+
+Factory (R1)
+A implementação é feita com a interface ExameScenarioFactory (a fábrica abstrata) e a classe CsvExameScenarioFactory (a fábrica concreta), que lê os dados de um arquivo CSV.
+Como funciona : Em vez de ter dados de pacientes e médicos codificados diretamente no programa, a classe CsvExameScenarioFactory lê um arquivo CSV. Ela processa cada linha do arquivo e usa as informações para instanciar objetos como Paciente e Medico.
+
 Singleton (R2)
 Onde é usado: Classe IDGenerator.
 
