@@ -46,12 +46,12 @@ Onde é usado: Interface Validador e suas implementações (ValidadorGlicose, Va
 
 Como funciona: Cada Exame (o Contexto) contém uma referência para um Validador. O método exame.validar() delega a lógica de validação para o Validador associado, permitindo que a validação seja alterada em tempo de execução sem modificar a classe Exame.
 
-/*
-Observer (R6)
+
+Observer (R6) -- (Feito como simulação de envio de notificacão usando SysOut)
 Onde é usado: Interface Observer, classe NotificadorEmail e a lista de observadores na classe SistemaLaudoFacade.
 
 Como funciona: O SistemaLaudoFacade (o Sujeito) mantém uma lista de Observers (NotificadorEmail). Quando um laudo é gerado, o Facade notifica todos os observadores, que então executam suas tarefas (como enviar um e-mail), sem que o Facade precise saber os detalhes de como a notificação é feita.
-*/
+
 
 Chain of Responsibility (R7)
 Onde é usado: Classes Desconto (DescontoConvenio, DescontoIdoso).
