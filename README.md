@@ -21,6 +21,8 @@ A arquitetura do sistema foi desenhada com base em padrões de projeto para desa
 ### Factory (R1)
 
 ![1756172511828](image/README/1756172511828.png)
+
+
 A implementação é feita com a interface ExameScenarioFactory (a fábrica abstrata) e a classe CsvExameScenarioFactory (a fábrica concreta), que lê os dados de um arquivo CSV.
 Como funciona : Em vez de ter dados de pacientes e médicos codificados diretamente no programa, a classe CsvExameScenarioFactory lê um arquivo CSV. Ela processa cada linha do arquivo e usa as informações para instanciar objetos como Paciente e Medico.
 
@@ -64,6 +66,8 @@ Como funciona: O SistemaLaudoFacade (o Sujeito) mantém uma lista de Observers (
 ### Chain of Responsibility (R7)
 
 ![1756172968096](image/README/1756172968096.jpg)
+
+
 Onde é usado: Classes Desconto (DescontoConvenio, DescontoIdoso).
 
 Como funciona: A aplicação de descontos é organizada em uma cadeia. Uma requisição de desconto é iniciada e passa por cada manipulador (DescontoConvenio, DescontoIdoso) em sequência. Cada manipulador decide se aplica o desconto ou passa a requisição para o próximo na cadeia.
