@@ -1,20 +1,19 @@
-Sistema de Laudos e Diagnósticos
+# Sistema de Laudos e Diagnósticos - IF Diagnósticos
+
 Este projeto é um sistema de gerenciamento de laudos médicos desenvolvido em Java, utilizando uma arquitetura orientada a objetos e diversos padrões de projeto para garantir escalabilidade, organização e robustez.
 
 O sistema é capaz de processar exames de diferentes tipos, aplicar regras de negócio, validar informações e gerar laudos de forma dinâmica.
 
-Funcionalidades Principais
-Processamento por Prioridade: Os exames são processados com base na sua prioridade (URGENTE, POUCO_URGENTE, ROTINA).
+#### Funcionalidades Principais
 
-## Aplicação de Descontos Automática: Descontos de convênio e para idosos são aplicados sequencialmente.
+* Processamento por Prioridade: Os exames são processados com base na sua prioridade (URGENTE, POUCO_URGENTE, ROTINA).
+* Aplicação de Descontos Automática: Descontos de convênio e para idosos são aplicados sequencialmente.
+* Validação Dinâmica: Cada tipo de exame possui uma lógica de validação específica.
+* Geração de Laudos Flexível: Os laudos podem ser gerados em diferentes formatos (Texto, HTML, PDF) com facilidade.
+* Geração de ID Único: Cada exame recebe um ID sequencial e único.
 
-Validação Dinâmica: Cada tipo de exame possui uma lógica de validação específica.
+#### Arquitetura e Padrões de Projeto
 
-Geração de Laudos Flexível: Os laudos podem ser gerados em diferentes formatos (Texto, HTML, PDF) com facilidade.
-
-Geração de ID Único: Cada exame recebe um ID sequencial e único.
-
-Arquitetura e Padrões de Projeto
 A arquitetura do sistema foi desenhada com base em padrões de projeto para desacoplar as responsabilidades e tornar o código mais limpo e manutenível.
 
 ## Padrões utilizados
